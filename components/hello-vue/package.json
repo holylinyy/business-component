@@ -15,13 +15,10 @@
 		"dev": "vite build --watch",
 		"build": "w-build",
 		"lint": "eslint --fix",
-		"runBuild": "pnpm run build:2 && pnpm run build:27 && pnpm run build:3",
-		"build:2": "vue-demi-switch 2 vue2 && vite build --config ./build/vite2.config.ts",
-		"build:27": "vue-demi-switch 2.7 vue2.7 && vite build --config ./build/vite27.config.ts",
-		"build:3": "vue-demi-switch 3 vue3 && vite build --config ./build/vite3.config.ts",
-		"postinstall": "node -e \"try{require('./scripts/postinstall.js')}catch(e){console.log(e)}\""
+		"postinstall": "switchPkdVersion"
 	},
 	"dependencies": {
+		"@hlstarter/postinstall": "workspace:^",
 		"vue-demi": "^0.14.7"
 	},
 	"devDependencies": {

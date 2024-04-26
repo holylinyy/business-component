@@ -1,0 +1,29 @@
+{
+  "name": "@hlstarter/postinstall",
+  "version": "0.0.1",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "pnpm run stub",
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "bin": {
+    "switchPkdVersion": "bin/postinstall.js"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "vite-plugin-dts": "^3.9.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4"
+  }
+}

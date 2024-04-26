@@ -10,5 +10,6 @@
     "w-build": "bin/build.js"
   },
   "dependencies": {
+    "vite-plugin-dts": "^3.9.0"
   }
 }

@@ -1,4 +1,5 @@
 packages:
   - 'tools/*'
   - 'components/*'
+  - 'packages/*'
   - 'playground/*'

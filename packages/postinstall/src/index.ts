@@ -1,9 +1,12 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('node:path')
-const fse = require('fs-extra')
-const packageJson = require('../package.json')
-const packageJsonPath = path.join(__dirname, '../package.json')
+import path from 'node:path';
+import fse from 'fs-extra'
+import { createRequire } from 'node:module'
+
+const require = createRequire(process.cwd())
+const packageJsonPath = path.join(process.cwd(), './package.json')
+const packageJson = require(packageJsonPath)
+
+
 
 async function switchVersion() {
   let vue = null

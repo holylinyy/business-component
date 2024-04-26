@@ -17,6 +17,9 @@
     "cz": "git-cz"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/load": "^19.2.0",
     "@pnpm/types": "^10.0.0",
     "commitizen": "^4.3.0",
     "conventional-changelog-cli": "^4.1.0",

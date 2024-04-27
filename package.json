@@ -13,6 +13,7 @@
     "play": "cd playground/vue3 && pnpm run dev",
     "lint": "lerna run lint",
     "test": "lerna run test",
+    "build": "lerna run build",
     "prepare": "husky install",
     "cz": "git-cz"
   },

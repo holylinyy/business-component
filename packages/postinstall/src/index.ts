@@ -1,12 +1,10 @@
-import path from 'node:path';
+import path from 'node:path'
 import fse from 'fs-extra'
 import { createRequire } from 'node:module'
 
 const require = createRequire(process.cwd())
 const packageJsonPath = path.join(process.cwd(), './package.json')
 const packageJson = require(packageJsonPath)
-
-
 
 async function switchVersion() {
   let vue = null
@@ -36,15 +34,14 @@ async function switchVersion() {
   const distDir = `dist/${isVue2 ? (isVue27 ? 'v2.7' : 'v2') : 'v3'}`
 
   const exportJson = {
-    main: `${distDir}/index.js`,
-    module: `${distDir}/index.mjs`,
+    main: `${distDir}/index.cjs`,
+    module: `${distDir}/index.js`,
     types: `${distDir}/index.d.ts`,
-    style: `${distDir}/style.css`,
     exports: {
       '.': {
         types: `./${distDir}/index.d.ts`,
-        import: `./${distDir}/index.es.js`,
-        require: `./${distDir}/index.cjs.js`,
+        import: `./${distDir}/index.js`,
+        require: `./${distDir}/index.cjs`,
       },
     },
   }

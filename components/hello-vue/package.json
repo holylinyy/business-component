@@ -2,12 +2,13 @@
 	"name": "@hlstarter/hello-vue",
 	"version": "1.0.0",
 	"private": true,
-	"main": "dist/v3/index.js",
+	"main": "dist/v3/index.cjs",
+	"module": "dist/v3/index.js",
 	"exports": {
 		".": {
 			"types": "./dist/v3/index.d.ts",
-			"import": "./dist/v3/index.es.js",
-			"require": "./dist/v3/index.cjs.js"
+			"import": "./dist/v3/index.js",
+			"require": "./dist/v3/index.cjs"
 		}
 	},
 	"types": "dist/v3/index.d.ts",
@@ -15,7 +16,7 @@
 		"dev": "vite build --watch",
 		"build": "w-build",
 		"lint": "eslint --fix",
-		"postinstall": "switchPkdVersion"
+		"postinstall": "node -e \"try{require('@hlstarter/postinstall')}catch(e){}\""
 	},
 	"dependencies": {
 		"@hlstarter/postinstall": "workspace:^",
@@ -32,7 +33,5 @@
 		"@vue/composition-api": {
 			"optional": true
 		}
-	},
-	"module": "dist/v3/index.mjs",
-	"style": "dist/v3/style.css"
+	}
 }

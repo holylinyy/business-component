@@ -2,6 +2,7 @@ import { defineConfig, UserConfig } from 'vite'
 import { generateExternal, requireModules } from './utils'
 import { resolve } from 'pathe'
 import dts from 'vite-plugin-dts'
+import { formats, fileName } from './config'
 export default defineConfig(async (): Promise<UserConfig> => {
   const entry = resolve(process.cwd(), './src/index.ts')
   const vue2Plugin = requireModules(
@@ -24,8 +25,8 @@ export default defineConfig(async (): Promise<UserConfig> => {
   const build: UserConfig['build'] = {
     lib: {
       entry: entry,
-      formats: ['es'],
-      fileName: () => 'index.js',
+      formats,
+      fileName,
     },
 
     outDir: 'dist/v2',

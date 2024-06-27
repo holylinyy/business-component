@@ -1,3 +1,3 @@
-import customConfig from '@hlstarter/eslint-config-custom'
+import customConfig from '@uikit/eslint-config-custom'
 
 export default [...customConfig]

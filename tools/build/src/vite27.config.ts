@@ -9,6 +9,7 @@ export default defineConfig(async (): Promise<UserConfig> => {
   const vue27Plugin = requireModules(
     'playground/vue2.7/node_modules/@vitejs/plugin-vue2',
   )
+  const UnoCSS = (await import('unocss/vite')).default
   const vue27Compiler = requireModules(
     'playground/vue2.7/node_modules/vue/compiler-sfc',
   )
@@ -16,6 +17,9 @@ export default defineConfig(async (): Promise<UserConfig> => {
     vue27Plugin({ compiler: vue27Compiler }),
     dts({
       include: ['./src'],
+    }),
+    UnoCSS({
+      configFile: resolve(process.cwd(), './uno.config.ts'),
     }),
   ]
   const external = await generateExternal()

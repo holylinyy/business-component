@@ -1,5 +1,5 @@
 {
-  "name": "@hlstarter/postinstall",
+  "name": "@hlstarter/test-postinstall",
   "version": "0.0.1",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "fs-extra": "^11.2.0",
-    "vite-plugin-dts": "^3.9.0"
+    "vite-plugin-dts": "^3.9.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4"

@@ -8,6 +8,7 @@ export default defineConfig(async (): Promise<UserConfig> => {
   const vue2Plugin = requireModules(
     'playground/vue2/node_modules/vite-plugin-vue2',
   ).createVuePlugin
+  const UnoCSS = (await import('unocss/vite')).default
   const plugins: UserConfig['plugins'] = [
     vue2Plugin({
       jsx: true,
@@ -19,6 +20,9 @@ export default defineConfig(async (): Promise<UserConfig> => {
     }),
     dts({
       include: ['./src'],
+    }),
+    UnoCSS({
+      configFile: resolve(process.cwd(), './uno.config.ts'),
     }),
   ]
   const external = await generateExternal()

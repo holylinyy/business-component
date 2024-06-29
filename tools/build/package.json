@@ -2,14 +2,16 @@
   "name": "@hlstarter/build",
   "version": "0.0.1",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "pnpm run stub",
-    "stub": "unbuild --stub"
+    "stub": "unbuild --stub",
+    "postinstall": "pnpm run stub"
   },
   "bin": {
     "w-build": "bin/build.js"
   },
   "dependencies": {
-    "vite-plugin-dts": "^3.9.0"
+    "vite-plugin-dts": "^3.9.1"
   }
 }

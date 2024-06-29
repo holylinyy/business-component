@@ -9,10 +9,14 @@ export default defineConfig(async (): Promise<UserConfig> => {
   const vue3Plugin = requireModules(
     'playground/vue3/node_modules/@vitejs/plugin-vue',
   )
+  const UnoCSS = (await import('unocss/vite')).default
   const plugins: UserConfig['plugins'] = [
     vue3Plugin(),
     dts({
       include: ['./src'],
+    }),
+    UnoCSS({
+      configFile: resolve(process.cwd(), './uno.config.ts'),
     }),
   ]
   const external = await generateExternal()

@@ -1,5 +1,5 @@
 {
-	"name": "@hlstarter/hello-vue",
+	"name": "@hlstarter/test-hello-vue",
 	"version": "1.0.0",
 	"private": true,
 	"main": "dist/v3/index.cjs",
@@ -12,15 +12,28 @@
 		}
 	},
 	"types": "dist/v3/index.d.ts",
+	"publishConfig": {
+		"registry": "http://registry.npm.wps.cn"
+	},
+	"maintainers": [
+		{
+			"name": "yuanhaolin",
+			"email": "yuanhaolin@wps.cn"
+		},
+		{
+			"name": "liandao",
+			"email": "liandao@wps.cn"
+		}
+	],
 	"scripts": {
 		"dev": "vite build --watch",
 		"build": "w-build",
 		"lint": "eslint --fix",
-		"postinstall": "node -e \"try{require('@hlstarter/postinstall')}catch(e){}\""
+		"postinstall": "node -e \"try{require('@hlstarter/test-postinstall')}catch(e){}\""
 	},
 	"dependencies": {
-		"@hlstarter/postinstall": "workspace:^",
-		"vue-demi": "^0.14.7"
+		"@hlstarter/test-postinstall": "workspace:^",
+		"vue-demi": "^0.14.8"
 	},
 	"devDependencies": {
 		"@hlstarter/build": "workspace:^"

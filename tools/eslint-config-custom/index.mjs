@@ -6,6 +6,21 @@ import tseslint from 'typescript-eslint'
 import VueEslintParser from 'vue-eslint-parser'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import packageJson from 'eslint-plugin-package-json/configs/recommended'
+import jsoncParser from 'jsonc-eslint-parser'
+
+const pkgLintConfig = [
+  packageJson,
+  {
+    // ...
+    // Add the following settings.
+    files: ['**/*.json'], // Specify the extension or pattern you want to parse as JSON.
+    languageOptions: {
+      parser: jsoncParser, // Set this parser.
+    },
+  },
+]
+
 export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
@@ -27,6 +42,7 @@ export default [
   },
   {
     rules: {
+      'vue/require-default-prop': 'off',
       'vue/multi-word-component-names': 'off',
       'no-console': 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -88,4 +104,5 @@ export default [
   {
     ignores: ['**/dist/*'],
   },
+  ...pkgLintConfig,
 ]

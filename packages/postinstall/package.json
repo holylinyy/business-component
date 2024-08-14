@@ -1,9 +1,6 @@
 {
   "name": "@hlstarter/test-postinstall",
   "version": "0.0.1",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -11,13 +8,19 @@
       "require": "./dist/index.cjs"
     }
   },
-  "scripts": {
-    "dev": "pnpm run stub",
-    "build": "unbuild",
-    "stub": "unbuild --stub"
-  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "bin": {
     "switchPkdVersion": "bin/postinstall.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "pnpm run stub",
+    "stub": "unbuild --stub"
   },
   "dependencies": {
     "fs-extra": "^11.2.0",

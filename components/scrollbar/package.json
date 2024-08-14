@@ -1,5 +1,5 @@
 {
-  "name": "@hlstarter/test-hello-vue",
+  "name": "@hlstarter/scrollbar",
   "version": "1.0.0",
   "exports": {
     ".": {
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@hlstarter/test-postinstall": "workspace:^",
+    "@vueuse/core": "^10.11.0",
     "vue-demi": "^0.14.8"
   },
   "devDependencies": {

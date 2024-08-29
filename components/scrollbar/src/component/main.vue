@@ -5,15 +5,30 @@
         <slot></slot>
       </div>
     </div>
-    <Bar :ratio="ratioY" vertical :size="height" :move="moveY" />
+    <Bar
+      :always="always"
+      :ratio="ratioY"
+      :gap="gap"
+      vertical
+      :size="sizeHeight"
+      :move="moveY"
+    />
+    <Bar
+      :always="always"
+      :ratio="ratioX"
+      :gap="gap"
+      :size="sizeWidth"
+      :move="moveX"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue-demi'
+import { computed, defineComponent, provide, reactive, ref } from 'vue-demi'
 import { useElementSize } from '@vueuse/core'
 import Bar from './bar.vue'
-import { GAP } from './constants'
+import { klsPrefix } from '../../../constants'
+import { scrollbarContextKey } from './constants'
 
 export default defineComponent({
   components: {
@@ -24,14 +39,22 @@ export default defineComponent({
       type: Number,
       default: () => 20,
     },
+    gap: {
+      type: Number,
+      default: () => 4,
+    },
+    always: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['scroll'],
   setup(props, { emit }) {
     const scrollbarRef = ref<HTMLDivElement>()
-    const wrapRef = ref<HTMLDivElement | null>(null)
-    const viewRef = ref<HTMLDivElement | null>(null)
+    const wrapRef = ref<HTMLDivElement>()
+    const viewRef = ref<HTMLDivElement>()
     const descKls = computed(() => {
-      const prefix = 'hl-'
+      const prefix = klsPrefix.value + '-scrollbar-'
       return {
         main: prefix + 'main',
         wrap: prefix + 'wrap',
@@ -48,20 +71,49 @@ export default defineComponent({
       ]
       return kls
     })
+    provide(
+      scrollbarContextKey,
+      reactive({
+        scrollbarElement: scrollbarRef,
+        wrapElement: wrapRef,
+      }),
+    )
 
-    const { width: _wrapWidth, height: wrapHeight } = useElementSize(wrapRef)
-    const { width: _viewWidth, height: viewHeight } = useElementSize(viewRef)
+    const { width: wrapWidth, height: wrapHeight } = useElementSize(wrapRef)
 
     const offsetWrapHeight = computed(() => {
-      return wrapHeight.value - GAP
+      return wrapHeight.value - props.gap * 2
+    })
+    const offsetWrapWidth = computed(() => {
+      return wrapWidth.value - props.gap * 2
     })
 
     const originalHeight = computed(() => {
-      return offsetWrapHeight.value ** 2 / viewHeight.value
+      if (!wrapRef.value) return 0
+      return offsetWrapHeight.value ** 2 / wrapRef.value.scrollHeight
+    })
+    const originalWidth = computed(() => {
+      if (!wrapRef.value) return 0
+      return offsetWrapWidth.value ** 2 / wrapRef.value!.scrollWidth
     })
 
     const height = computed(() => {
       return Math.max(originalHeight.value, props.minSize)
+    })
+    const sizeHeight = computed(() => {
+      return height.value + props.gap * 2 < offsetWrapHeight.value
+        ? height.value
+        : 0
+    })
+
+    const width = computed(() => {
+      return Math.max(originalWidth.value, props.minSize)
+    })
+
+    const sizeWidth = computed(() => {
+      return width.value + props.gap * 2 < offsetWrapWidth.value
+        ? width.value
+        : 0
     })
 
     const ratioY = computed(() => {
@@ -72,30 +124,22 @@ export default defineComponent({
       )
     })
 
+    const ratioX = computed(() => {
+      return (
+        originalWidth.value /
+        (wrapWidth.value - originalWidth.value) /
+        (width.value / (wrapWidth.value - width.value))
+      )
+    })
+
     const moveY = ref(0)
-
-    // const ratioY = computed(() => {
-    //   return originalHeight.value / (viewHeight.value - )
-    // })
-
-    watch(
-      () => [wrapHeight.value, viewHeight.value],
-      () => {
-        console.log(111111, wrapHeight.value, viewHeight.value)
-      },
-    )
-
-    // useResizeObserver(wrapRef, (entries) => {
-    //   const entry = entries[0]
-    //   const { width, height } = entry.contentRect
-    //   console.log('wrapRef resizeObserver', 'width', width, 'height', height)
-    // })
-
+    const moveX = ref(0)
     const wrapKls = computed(() => {
       const kls: string[] = [
         descKls.value.wrap,
         'scrollbar-none',
         'h-full',
+        'w-full',
         'overflow-scroll',
       ]
       return kls
@@ -109,6 +153,8 @@ export default defineComponent({
       if (!wrapRef.value) return
       moveY.value =
         (wrapRef.value.scrollTop / offsetWrapHeight.value) * ratioY.value
+      moveX.value =
+        (wrapRef.value.scrollLeft / offsetWrapWidth.value) * ratioX.value
     }
 
     const onScroll = (e: Event) => {
@@ -128,8 +174,13 @@ export default defineComponent({
       onScroll,
       originalHeight,
       moveY,
+      moveX,
       ratioY,
+      ratioX,
       height,
+      width,
+      sizeHeight,
+      sizeWidth,
     }
   },
 })
